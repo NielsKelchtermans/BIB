@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BIBData.Models;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.EntityFrameworkCore;
 
 namespace BIBWeb
 {
@@ -23,6 +26,7 @@ namespace BIBWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<BIBDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BIBConnections")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
