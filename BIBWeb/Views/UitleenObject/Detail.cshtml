@@ -1,0 +1,27 @@
+﻿@model UitleenobjectDetailViewModel
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h2>@Model.Type  <i>@Model.Naam</i></h2>
+<h4>@Model.Details</h4>
+<p>Aankoopjaar : @Model.Jaar</p>
+<p>Kostprijs : @Html.DisplayFor(m=>Model.Kostprijs)</p>
+<p>Status : @Model.Status </p>
+<img class="afbeelding" src="@Model.ImageUrl"/>
+
+@if (Model.Status==Status.Beschikbaar)
+{
+    <p>
+        <a class="btn btn-lg btn-info" asp-action="Uitlenen" asp-route-id="@Model.Id">Uitlenen</a>
+    </p>
+}
+else
+{
+    <form asp-action="Terugbrengen" method="post" asp-route-id="@Model.Id">
+        <p>
+            <button class="btn btn-lg btn-success">Terugbrengen</button>
+        </p>
+    </form>
+}
+

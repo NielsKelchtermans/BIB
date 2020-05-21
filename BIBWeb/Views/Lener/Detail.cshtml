@@ -1,0 +1,10 @@
+﻿@model Lener
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h2>Lener @Model.Voornaam @Model.Familienaam</h2>
+<p>Geboortedatum: @Html.DisplayFor(m => Model.Geboortedatum)</p>
+<p>Adres : @Model.Adres</p>
+<p>Telefoonnr : @Model.Telefoonnr</p>
+
