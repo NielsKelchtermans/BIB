@@ -14,11 +14,14 @@ namespace BIBWeb.Controllers
         private UitleenObjectService UitleenObjectService;
         private LenerService lenerService;
         private UitleningService UitleningService;
-        public UitleenObjectController(UitleenObjectService uitleenObjectService, LenerService lenerService, UitleningService uitleningService)
+        private ReserveringService reserveringService;
+        public UitleenObjectController(UitleenObjectService uitleenObjectService, LenerService lenerService,
+            UitleningService uitleningService,ReserveringService reserveringService)
         {
             this.UitleenObjectService = uitleenObjectService;
             this.lenerService = lenerService;
             this.UitleningService = uitleningService;
+            this.reserveringService = reserveringService;
         }
         public IActionResult Index()
         {
@@ -93,5 +96,44 @@ namespace BIBWeb.Controllers
             UitleningService.ItemTerugbrengen(id);
             return RedirectToAction("Index");
         }
+        public IActionResult Reserveren(int id)
+        {
+            //uitleenobject zoeken
+            var item = UitleenObjectService.GetUitleenobject(id);
+
+            //reserveringenlijst
+            var reserveringenLijst = reserveringService.GetReserveringenVoorUitleenobject(id);
+
+            //lenerslijst
+            var lenerSelectList = new List<SelectListItem>();
+            foreach (var lener in lenerService.GetAllLeners())
+            {
+                lenerSelectList.Add(new SelectListItem
+                {
+                    Text = lener.Voornaam + " " + lener.Familienaam,
+                    Value = lener.Id.ToString()
+                }) ;
+
+            }
+            //Viewmodel invullen
+            var model = new ReserveerViewModel
+            {
+                ItemId = id,
+                ImageUrl = item.ImageUrl,
+                Naam = item.Naam,
+                Reserveringen = reserveringenLijst,
+                Leners= lenerSelectList
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ItemReserveren(int itemId, int GekozenLenerId)
+        {
+            reserveringService.ItemReserveren(itemId, GekozenLenerId);
+            return RedirectToAction("Detail", new { id = itemId });
+        }
+
+        
     }
 }

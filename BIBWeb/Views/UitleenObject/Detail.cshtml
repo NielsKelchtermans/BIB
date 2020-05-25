@@ -6,11 +6,11 @@
 <h2>@Model.Type  <i>@Model.Naam</i></h2>
 <h4>@Model.Details</h4>
 <p>Aankoopjaar : @Model.Jaar</p>
-<p>Kostprijs : @Html.DisplayFor(m=>Model.Kostprijs)</p>
+<p>Kostprijs : @Html.DisplayFor(m => Model.Kostprijs)</p>
 <p>Status : @Model.Status </p>
-<img class="afbeelding" src="@Model.ImageUrl"/>
+<img class="afbeelding" src="@Model.ImageUrl" />
 
-@if (Model.Status==Status.Beschikbaar)
+@if (Model.Status == Status.Beschikbaar)
 {
     <p>
         <a class="btn btn-lg btn-info" asp-action="Uitlenen" asp-route-id="@Model.Id">Uitlenen</a>
@@ -18,10 +18,21 @@
 }
 else
 {
-    <form asp-action="Terugbrengen" method="post" asp-route-id="@Model.Id">
-        <p>
-            <button class="btn btn-lg btn-success">Terugbrengen</button>
-        </p>
-    </form>
+    if (Model.Status == Status.Gereserveerd)
+    {
+        @*knop reservering ophalen komt hier*@
+    }
+    else
+    {
+        <form asp-action="Terugbrengen" method="post" asp-route-id="@Model.Id">
+            <p>
+                <button class="btn btn-lg btn-success">Terugbrengen</button>
+            </p>
+        </form>
+    }
+    <p>
+        <a class="btn btn-lg btn-warning" asp-action="Reserveren" asp-route-id="@Model.Id">Reserveren</a>
+    </p>
+
 }
 

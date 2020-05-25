@@ -37,6 +37,8 @@ namespace BIBWeb
             services.AddTransient<UitleenObjectService>();
             services.AddTransient<UitleningService>();
             services.AddTransient<IUitleningRepository, SQLUitleningRepository>();
+            services.AddTransient<ReserveringService>();
+            services.AddTransient<IReserveringRepository, SQLReserveringRepository>();
 
         }
 

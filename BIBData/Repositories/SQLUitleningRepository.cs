@@ -29,13 +29,13 @@ namespace BIBData.Repositories
             return context.Uitleningen;
         }
 
-        public void SetReturnDate(int uitleenobjectId, DateTime dateTime)
+        public void SetReturnDate(int uitleenobjectId, DateTime now)
         {
             var uitlening = context.Uitleningen
                 .Where(u => u.Tot == null)
-                .Where(u => u.Id == uitleenobjectId)
+                .Where(u => u.Uitleenobject.Id == uitleenobjectId)
                 .FirstOrDefault();
-            uitlening.Tot = dateTime;
+            uitlening.Tot = now;
             context.SaveChanges();
         }
     }

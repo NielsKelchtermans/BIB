@@ -11,12 +11,14 @@ namespace BIBServices
         private IUitleenobjectRepository uitleenobjectRepository;
         private IUitleningRepository uitleningRepository;
         private ILenerRepository lenerRepository;
+        private IReserveringRepository reserveringRepository;
         public UitleningService(IUitleenobjectRepository uitleenobjectRepository,
-        IUitleningRepository uitleningRepository, ILenerRepository lenerRepository)
+        IUitleningRepository uitleningRepository, ILenerRepository lenerRepository, IReserveringRepository reserveringRepository)
         {
             this.uitleenobjectRepository = uitleenobjectRepository;
             this.uitleningRepository = uitleningRepository;
             this.lenerRepository = lenerRepository;
+            this.reserveringRepository = reserveringRepository;
         }
 
         public void UitleningRegistreren(int uitleenobjectId, int LenerId)
@@ -30,9 +32,18 @@ namespace BIBServices
         public void ItemTerugbrengen(int uitleenobjectId)
         {
             //datum "tot" invullen
-            uitleningRepository.SetReturnDate(uitleenobjectId, DateTime.Now);
-            //wijzig status in beschikbaar
-            uitleenobjectRepository.SetStatus(uitleenobjectId, Status.Beschikbaar);
+            uitleningRepository.SetReturnDate(uitleenobjectId,  DateTime.Now);
+
+            if (reserveringRepository.IsGereserveerd(uitleenobjectId))
+            {
+                uitleenobjectRepository.SetStatus(uitleenobjectId, Status.Gereserveerd);
+            }
+            else
+            {
+                //wijzig status in beschikbaar
+                uitleenobjectRepository.SetStatus(uitleenobjectId, Status.Beschikbaar);
+            }
+            
         }
     }
 }
