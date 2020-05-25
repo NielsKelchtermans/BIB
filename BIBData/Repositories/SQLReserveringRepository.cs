@@ -41,5 +41,13 @@ namespace BIBData.Repositories
                 return true;
             }
         }
+
+        public void VerwijderReservering(int itemId, int lenerId)
+        {
+            var reservering = context.Reserveringen.Include(r => r.Lener).Include(r => r.Uitleenobject)
+                .FirstOrDefault(r => r.Lener.Id == lenerId && r.Uitleenobject.Id == itemId);
+            context.Remove(reservering);
+            context.SaveChanges();
+        }
     }
 }

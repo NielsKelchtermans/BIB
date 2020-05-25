@@ -45,5 +45,19 @@ namespace BIBServices
             }
             
         }
+
+        public string GetHuidigeUitlener(int uitleenobjectId)
+        {
+            var uitlening = uitleningRepository.GetOpenstaandeUitleningVoorUitleenobject(uitleenobjectId);
+
+            if (uitlening == null)
+            {
+                return "Niet uitgeleend";
+            }
+            else
+            {
+                return uitlening.Lener.Voornaam + " " + uitlening.Lener.Familienaam;
+            }
+        }
     }
 }

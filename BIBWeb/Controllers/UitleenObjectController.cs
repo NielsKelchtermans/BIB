@@ -46,6 +46,7 @@ namespace BIBWeb.Controllers
         public IActionResult Detail(int id)
         {
             var item = UitleenObjectService.GetUitleenobject(id);
+
             var model = new UitleenobjectDetailViewModel
             {
                 Id = id,
@@ -55,7 +56,9 @@ namespace BIBWeb.Controllers
                 Status = item.Status,
                 ImageUrl = item.ImageUrl,
                 Details = UitleenObjectService.GetDetails(id),
-                Type = UitleenObjectService.GetUitleenObjectType(id)
+                Type = UitleenObjectService.GetUitleenObjectType(id),
+                HuidigeUitlener = UitleningService.GetHuidigeUitlener(id),
+                EersteInWachtlijst = reserveringService.GetEersteLenerOpReserveringslijst(id)
             };
             return View(model);
         }
@@ -134,6 +137,19 @@ namespace BIBWeb.Controllers
             return RedirectToAction("Detail", new { id = itemId });
         }
 
-        
+        [HttpPost]
+        public IActionResult ReserveringOphalen(int itemId, int lenerId)
+        {
+            //oudste reservering verwijderen van dit item
+            reserveringService.ReserveringVerwijderen( itemId, lenerId);
+            //item uitlenen aan eerste in wachtlijst
+            UitleningService.UitleningRegistreren(itemId, lenerId);
+
+            return RedirectToAction("Detail", new { id = itemId });
+
+        }
+
+
+
     }
 }

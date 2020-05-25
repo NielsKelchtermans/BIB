@@ -11,7 +11,9 @@ namespace BIBData.Repositories
         IEnumerable<Uitlening> GetAll();
         void Add(Uitlening nieuweUitlening);
         void SetReturnDate(int uitleenobjectId, DateTime now);
-        
+
+        Uitlening GetOpenstaandeUitleningVoorUitleenobject(int uitleenobjectId);
+
 
     }
 }

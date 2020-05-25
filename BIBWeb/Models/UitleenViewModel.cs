@@ -13,5 +13,8 @@ namespace BIBWeb.Models
         public string ImageUrl { get; set; }
         public int GekozenLenerId { get; set; }
         public IEnumerable<SelectListItem> Leners { get; set; }
+
+
+        
     }
 }

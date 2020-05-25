@@ -1,4 +1,5 @@
 ﻿using BIBData.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,12 @@ namespace BIBData.Repositories
         public IEnumerable<Uitlening> GetAll()
         {
             return context.Uitleningen;
+        }
+
+        public Uitlening GetOpenstaandeUitleningVoorUitleenobject(int uitleenobjectId)
+        {
+            return context.Uitleningen.Include(u => u.Lener).Include(u => u.Uitleenobject)
+                .Where(u => u.Tot == null).FirstOrDefault(u => u.Uitleenobject.Id == uitleenobjectId);
         }
 
         public void SetReturnDate(int uitleenobjectId, DateTime now)

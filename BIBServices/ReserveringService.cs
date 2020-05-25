@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BIBData.Repositories;
 using BIBData.Models;
+using System.Linq;
 
 namespace BIBServices
 {
@@ -35,6 +36,15 @@ namespace BIBServices
 
             }) ;
         }
+        public Lener GetEersteLenerOpReserveringslijst(int uitleenobjectId)
+        {
+            return reserveringRepository.GetReserveringenVoorUitleenobject(uitleenobjectId)
+                .FirstOrDefault()?.Lener;
+        }
 
+        public void ReserveringVerwijderen(int itemId, int lenerId)
+        {
+            reserveringRepository.VerwijderReservering(itemId, lenerId);
+        }
     }
 }
