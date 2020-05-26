@@ -23,5 +23,8 @@ namespace BIBWeb.Models
         public string HuidigeUitlener { get; set; }
         public Lener EersteInWachtlijst { get; set; }
 
+        //oefening
+        public IEnumerable<Lener> Wachtlijst { get; set; }
+
     }
 }

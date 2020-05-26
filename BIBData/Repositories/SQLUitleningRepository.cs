@@ -30,6 +30,12 @@ namespace BIBData.Repositories
             return context.Uitleningen;
         }
 
+        public IEnumerable<Uitlening> GetOpenstaandeUitleningenVanLener(int lenerId)
+        {
+            return context.Uitleningen.Include(u => u.Lener).Include(u => u.Uitleenobject)
+                .Where(u => u.Lener.Id == lenerId && u.Tot == null).OrderBy(u => u.Van);
+        }
+
         public Uitlening GetOpenstaandeUitleningVoorUitleenobject(int uitleenobjectId)
         {
             return context.Uitleningen.Include(u => u.Lener).Include(u => u.Uitleenobject)

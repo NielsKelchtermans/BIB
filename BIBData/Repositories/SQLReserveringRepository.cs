@@ -21,6 +21,15 @@ namespace BIBData.Repositories
             context.SaveChanges();
         }
 
+        public IEnumerable<Reservering> GetReserveringenVanLener(int lenerId)
+        {
+            return context.Reserveringen
+                     .Include(r => r.Lener)
+                     .Include(r => r.Uitleenobject)
+                     .Where(r => r.Lener.Id == lenerId)
+                     .OrderBy(r => r.GereserveerdOp);
+        }
+
         public IEnumerable<Reservering> GetReserveringenVoorUitleenobject(int uitleenobjectId)
         {
             return context.Reserveringen.Include(r => r.Lener)
@@ -32,7 +41,7 @@ namespace BIBData.Repositories
         {
             var reservering = context.Reserveringen.Include(r => r.Uitleenobject)
                 .FirstOrDefault(r => r.Uitleenobject.Id == uitleenobjectId);
-            if (reservering==null)
+            if (reservering == null)
             {
                 return false;
             }

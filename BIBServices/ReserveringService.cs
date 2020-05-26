@@ -46,5 +46,14 @@ namespace BIBServices
         {
             reserveringRepository.VerwijderReservering(itemId, lenerId);
         }
+        public IEnumerable<Reservering> GetReserveringenVanLener(int lenerId)
+        {
+            return reserveringRepository.GetReserveringenVanLener(lenerId);
+        }
+
+        public IEnumerable<Lener> GetReserveringslijst(int uitleenobjectId)
+        {
+            return reserveringRepository.GetReserveringenVoorUitleenobject(uitleenobjectId)?.Select(r => r.Lener);
+        }
     }
 }

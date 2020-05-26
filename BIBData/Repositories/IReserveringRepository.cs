@@ -12,5 +12,6 @@ namespace BIBData.Repositories
 
         bool IsGereserveerd(int uitleenobjectId);
         void VerwijderReservering(int itemId, int lenerId);
+        IEnumerable<Reservering> GetReserveringenVanLener(int lenerId);
     }
 }

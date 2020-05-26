@@ -47,6 +47,8 @@ namespace BIBWeb.Controllers
         {
             var item = UitleenObjectService.GetUitleenobject(id);
 
+            
+
             var model = new UitleenobjectDetailViewModel
             {
                 Id = id,
@@ -58,6 +60,7 @@ namespace BIBWeb.Controllers
                 Details = UitleenObjectService.GetDetails(id),
                 Type = UitleenObjectService.GetUitleenObjectType(id),
                 HuidigeUitlener = UitleningService.GetHuidigeUitlener(id),
+                Wachtlijst = reserveringService.GetReserveringslijst(id),
                 EersteInWachtlijst = reserveringService.GetEersteLenerOpReserveringslijst(id)
             };
             return View(model);

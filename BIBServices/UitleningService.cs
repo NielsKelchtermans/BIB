@@ -59,5 +59,9 @@ namespace BIBServices
                 return uitlening.Lener.Voornaam + " " + uitlening.Lener.Familienaam;
             }
         }
+        public IEnumerable<Uitlening> GetOpenstaandeUitleningenVanLener(int lenerId)
+        {
+            return uitleningRepository.GetOpenstaandeUitleningenVanLener(lenerId);
+        }
     }
 }
