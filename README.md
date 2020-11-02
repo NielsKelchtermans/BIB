@@ -1,0 +1,3 @@
+# BIB
+
+ASP.NET web-app voor een bibliotheek met users en boeken, uitlenen en reserveren...
